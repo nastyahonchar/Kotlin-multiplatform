@@ -1,4 +1,4 @@
-package com.example.kotlin_app
+package com.example.kotlin_app.data.timezones
 
 interface TimeZoneHelper {
     fun getTimeZoneStrings(): List<String>
