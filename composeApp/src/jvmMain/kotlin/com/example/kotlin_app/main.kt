@@ -19,6 +19,10 @@ import kotlinapp.composeapp.generated.resources.Res
 import kotlinapp.composeapp.generated.resources.app_name
 import org.jetbrains.compose.resources.stringResource
 import com.example.kotlin_app.ui.shared_mobile.main.MainScreen
+import kotlinapp.composeapp.generated.resources.close
+import kotlinapp.composeapp.generated.resources.exit
+import kotlinapp.composeapp.generated.resources.file
+import kotlinapp.composeapp.generated.resources.new
 
 data class WindowInfo(val windowName: String, val windowState: WindowState)
 
@@ -43,11 +47,11 @@ fun main() = application {
             title = windowList[i].windowName
         ) {
             MenuBar {
-                Menu("File", mnemonic = 'F') {
-                    val nextWindowState = rememberWindowState()
+                Menu(stringResource(Res.string.file), mnemonic = 'F') {
                     val windowsName = stringResource(Res.string.app_name, windowCount)
+                    val nextWindowState = rememberWindowState()
                     Item(
-                        "New", onClick = {
+                        stringResource(Res.string.new), onClick = {
                             windowCount++
                             windowList.add(
                                 WindowInfo(
@@ -59,13 +63,13 @@ fun main() = application {
                             Key.N, ctrl = true
                         )
                     )
-                    Item("Close", onClick = {
+                    Item(stringResource(Res.string.close), onClick = {
                         windowList.removeAt(i)
 
                     }, shortcut = KeyShortcut(Key.W, ctrl = true))
                     Separator()
                     Item(
-                        "Exit",
+                        stringResource(Res.string.exit),
                         onClick = { windowList.clear() },
                         shortcut = KeyShortcut(Key.Q, ctrl = true)
                     )

@@ -12,4 +12,9 @@
     <string name="add_timezones">Add timezones</string>
     <string name="meetings">Meetings</string>
     <string name="done">Done</string>
+
+    <string name="file">File</string>
+    <string name="new">New</string>
+    <string name="close">Close</string>
+    <string name="exit">Exit</string>
 </resources>
