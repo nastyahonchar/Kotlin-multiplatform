@@ -22,70 +22,72 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import kotlinapp.composeapp.generated.resources.Res
 import kotlinapp.composeapp.generated.resources.done
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
+expect fun MeetingDialogWrapper(onDismiss: () -> Unit, content: @Composable () -> Unit)
+
+@Composable
 fun MeetingDialog(
     hours: SnapshotStateList<Int>,
     onDismiss: () -> Unit
-) = Dialog(
-    onDismissRequest = onDismiss
 ) {
-    Surface(
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary),
-        shape = RoundedCornerShape(8.dp),
-        shadowElevation = 8.dp,
-        modifier = Modifier.fillMaxWidth(),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+    MeetingDialogWrapper(onDismiss) {
+        Surface(
+            border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.primary),
+            shape = RoundedCornerShape(8.dp),
+            shadowElevation = 8.dp,
+            modifier = Modifier.fillMaxWidth(),
         ) {
-            val listState = rememberLazyListState()
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-                text = "Meeting Times",
-                style = MaterialTheme.typography.bodyLarge
-            )
-            LazyColumn(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp),
-                contentPadding = PaddingValues(16.dp),
-                state = listState,
+                    .padding(16.dp)
+            ) {
+                val listState = rememberLazyListState()
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    text = "Meeting Times",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp),
+                    contentPadding = PaddingValues(16.dp),
+                    state = listState,
 
-                ) {
-                items(hours) { hour ->
-                    Surface(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
+
                     ) {
-                        Row(
+                    items(hours) { hour ->
+                        Surface(
                             modifier = Modifier
-                                .fillMaxWidth(),
+                                .padding(8.dp)
+                                .fillMaxWidth()
                         ) {
-                            Text(hour.toString())
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                            ) {
+                                Text(hour.toString())
+                            }
                         }
                     }
                 }
-            }
-            Spacer(modifier = Modifier.size(16.dp))
-            Button(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-                onClick = {
-                    onDismiss()
+                Spacer(modifier = Modifier.size(16.dp))
+                Button(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    onClick = {
+                        onDismiss()
+                    }
+                ) {
+                    Text(text = stringResource(Res.string.done))
                 }
-            ) {
-                Text(text = stringResource(Res.string.done))
             }
-
         }
     }
 }
